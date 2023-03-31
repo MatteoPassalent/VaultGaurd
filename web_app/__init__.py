@@ -46,12 +46,10 @@ def create_app():
     # Connect application
     login_manager.init_app(app)
 
-    # # tells flask how to load a user, query default looks for primary key. Returns id
-    # @login_manager.user_loader
-
-    # #
-    # def load_user(id):
-    #     return User.query.get(int(id))
+    # tells flask how to load a user, query default looks for primary key. Returns id
+    @login_manager.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
 
     return app
 
