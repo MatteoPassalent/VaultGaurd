@@ -1,6 +1,6 @@
 # . means from this package (website folder)!
 from . import db
-# Custom class
+# Custom class!
 from flask_login import UserMixin
 
 # references data from user class, specifically column user.id. User has multiple notes (One to many relationship), must make the foreign key in the child object
