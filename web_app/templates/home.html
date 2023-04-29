@@ -1,88 +1,153 @@
 <!--Extends base template-->
 
-{% extends "base.html" %} {% block title %}Vault{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}Vault{% endblock %} {% block content
+%}
 
 <!-- Displays notes on homepage (below till /ul)-->
 <h1 align="center">Stored Accounts</h1>
 <!--creates list-->
 <ul class="list-group list-group-flush" id="accounts">
-    <!--can do this cuz user is passed already?-->
-    <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 g-4">
-          {% for account in user.accounts %}
-            <div class="col mb-4">
-              <div class="card h-100">
-                <button class="btn position-absolute btn-lg" style="top: 8px; right: 8px;" onclick="confirmDelete( {{ account.id }})">
-                    <span aria-hidden="true">&times;</span>
+  <!--can do this cuz user is passed already?-->
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      {% for account in user.accounts %}
+      <div class="col mb-4">
+        <div class="card h-100">
+          <button
+            class="btn position-absolute btn-lg"
+            style="top: 8px; right: 8px"
+            onclick="confirmDelete( {{ account.id }})"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="card-body">
+            <h5 class="card-title" style="font-size: 24px">
+              {{ account.AccountTitle }}
+            </h5>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="list-item-content">
+                <span class="list-item-label"><u>Username:</u></span>
+                <span id="username-{{ loop.index }}" class="list-item-value"
+                  >{{ account.UserName }}</span
+                >
+                <button
+                  class="btn btn-outline-primary btn-sm list-item-action"
+                  onclick="copyToClipboard('username-{{ loop.index }}')"
+                >
+                  Copy
                 </button>
-                <div class="card-body">
-                  <h5 class="card-title" style="font-size: 24px">{{ account.AccountTitle }}</h5>
-                </div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">
-                    <div class="list-item-content">
-                      <span class="list-item-label"><u>Username:</u></span>
-                      <span id="username-{{ loop.index }}" class="list-item-value">{{ account.UserName }}</span>
-                      <button class="btn btn-outline-primary btn-sm list-item-action" onclick="copyToClipboard('username-{{ loop.index }}')">Copy</button>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="list-item-content">
-                      <span class="list-item-label"><u>Email:</u></span>
-                      <span id="email-{{ loop.index }}" class="list-item-value">{{ account.Email }}</span>
-                      <button class="btn btn-outline-primary btn-sm list-item-action" onclick="copyToClipboard('email-{{ loop.index }}')">Copy</button>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="list-item-content">
-                      <span class="list-item-label"><u>Password:</u></span>
-                      <input id="password-{{ loop.index }}" class="list-item-value password-input" type="password" value="{{ account.Password }}" readonly>
-                      <button class="btn btn-outline-primary btn-sm list-item-action" onclick="copyToClipboard('password-{{ loop.index }}')">Copy</button>
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="list-item-content">
-                      <span class="list-info-label"><u>Additional Info:</u></span>
-                      <span class="list-item-value text-wrap" style="word-break: break-word;">{{ account.Additional }}</span>
-                    </div>
-                  </li>
-                </ul>
               </div>
-            </div>
-          {% endfor %}
+            </li>
+            <li class="list-group-item">
+              <div class="list-item-content">
+                <span class="list-item-label"><u>Email:</u></span>
+                <span id="email-{{ loop.index }}" class="list-item-value"
+                  >{{ account.Email }}</span
+                >
+                <button
+                  class="btn btn-outline-primary btn-sm list-item-action"
+                  onclick="copyToClipboard('email-{{ loop.index }}')"
+                >
+                  Copy
+                </button>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="list-item-content">
+                <span class="list-item-label"><u>Password:</u></span>
+                <input
+                  id="password-{{ loop.index }}"
+                  class="list-item-value password-input"
+                  type="password"
+                  value="{{ account.Password }}"
+                  readonly
+                />
+                <button
+                  class="btn btn-outline-primary btn-sm list-item-action"
+                  onclick="copyToClipboard('password-{{ loop.index }}')"
+                >
+                  Copy
+                </button>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="list-item-content">
+                <span class="list-info-label"><u>Additional Info:</u></span>
+                <span
+                  class="list-item-value text-wrap"
+                  style="word-break: break-word"
+                  >{{ account.Additional }}</span
+                >
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
+      {% endfor %}
+    </div>
+  </div>
 </ul>
 
-</body>
-</html>
 <!--Sends post request with textarea that allows input of note and submit button that adds the note (still all using bootstrap stuff)-->
 <form method="POST" action="{{ url_for('views.add_account') }}">
-    <br />
-    <div align="center">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#account" onclick="scrollToBottom()">Add account</button>
-        <div class="collapse" id="account">
-            <br />
-            <input name="accountTitle" id="accountTitle" class="form-control" placeholder="Enter the Account Name"></input>
-            <br />
-            <input name="userName" id="userName" class="form-control" placeholder="Enter your username"></input>
-            <br />
-            <input type='email' name="email" id="email" class="form-control" placeholder="Enter your email"></input>
-            <br />
-            <input type='password' name="password" id="password" class="form-control" placeholder="Enter your password"></input>
-            <br />
-            <textarea type='text' name="additional" id="additional" class="form-control" placeholder="Enter any additional info"></textarea>
-
-
-            <br />
-            <div align="center">
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-        </div>
+  <br />
+  <div align="center">
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-toggle="collapse"
+      data-target="#account"
+      onclick="scrollToBottom()"
+    >
+      Add account
+    </button>
+    <div class="collapse" id="account">
+      <br />
+      <input
+        name="accountTitle"
+        id="accountTitle"
+        class="form-control"
+        placeholder="Enter the Account Name"
+      />
+      <br />
+      <input
+        name="userName"
+        id="userName"
+        class="form-control"
+        placeholder="Enter your username"
+      />
+      <br />
+      <input
+        type="email"
+        name="email"
+        id="email"
+        class="form-control"
+        placeholder="Enter your email"
+      />
+      <br />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="form-control"
+        placeholder="Enter your password"
+      />
+      <br />
+      <textarea
+        type="text"
+        name="additional"
+        id="additional"
+        class="form-control"
+        placeholder="Enter any additional info"
+      ></textarea>
+      <br />
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
     </div>
+  </div>
 </form>
-
 
 {% endblock %}
