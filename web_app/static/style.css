@@ -1,0 +1,30 @@
+
+.list-item-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.list-info-label {
+  flex: 0.7;
+}
+.list-item-label {
+  flex: 0.8;
+}
+.list-item-value {
+  flex: 2.2;
+}
+.list-item-action {
+  flex: 0;
+  max-width: 70px;
+}
+
+
+.password-input {
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  cursor: default;
+}

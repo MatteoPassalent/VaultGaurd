@@ -1,5 +1,5 @@
 <!--base template is basic theme of site, later you can overide base template to specify different pages etc-->
-<!-- The link stuff is a CDN (content delivery network), allows to load custom CSS and Javascript, classes that can be used for elements to look nicer, bootsrap -->
+<!-- link is a CDN (content delivery network), allows to load custom CSS and Javascript, classes that can be used for elements to look nicer, bootsrap -->
 <!-- Django is templating engine that allows you to write html/python instead of CSS or Javascript -->
 
 <!DOCTYPE html>
@@ -18,38 +18,7 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
-    <style>
-      .list-item-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-      }
-      .list-info-label {
-        flex: 0.7;
-      }
-      .list-item-label {
-        flex: 0.8;
-      }
-      .list-item-value {
-        flex: 2.2;
-      }
-      .list-item-action {
-        flex: 0;
-        max-width: 70px;
-      }
-    </style>
-
-    <style>
-      .password-input {
-        border: none;
-        background-color: transparent;
-        font-family: inherit;
-        font-size: inherit;
-        outline: none;
-        cursor: default;
-      }
-    </style>
+    <link rel="stylesheet" href="static/style.css" />
 
     <title>{% block title %}Home{% endblock %}</title>
   </head>
@@ -111,68 +80,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-
-    {% block javascript %}
-    <script>
-      function deleteAccount(accountId) {
-        fetch("/delete-account", {
-          method: "POST",
-          body: JSON.stringify({ accountId: accountId }),
-        }).then((_res) => {
-          window.location.href = "/";
-        });
-      }
-    </script>
-    {% endblock %}
-
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      async function confirmDelete(accountId) {
-        const result = await Swal.fire({
-          title: "Are you sure?",
-          text: "You will not be able to recover this account information!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        });
-
-        if (result.isConfirmed) {
-          deleteAccount(accountId);
-        }
-      }
-    </script>
-
-    <script>
-      function copyToClipboard(elementId) {
-        const el = document.getElementById(elementId);
-        const text = el.tagName === "INPUT" ? el.value : el.innerText;
-        const textarea = document.createElement("textarea");
-
-        textarea.textContent = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-
-        try {
-          document.execCommand("copy");
-        } catch (err) {
-          console.error("Unable to copy text:", err);
-        }
-
-        document.body.removeChild(textarea);
-      }
-    </script>
-
-    <script>
-      function scrollToBottom() {
-        setTimeout(() => {
-          window.scrollTo({
-            top: document.body.scrollHeight,
-            behavior: "smooth",
-          });
-        }, 320);
-      }
-    </script>
+    <script src="static/script.js"></script>
   </body>
 </html>

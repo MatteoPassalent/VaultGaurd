@@ -1,25 +1,53 @@
-from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from . import db
 from .models import Account
 import json
 
-# creates blueprint (mini flask app). Blueprint holds multiple routes inside
+# creates blueprint object named views
+# Note: Blueprint holds multiple routes inside, can be used like an individual flask app.
 views = Blueprint("views", __name__)
 
-# function below will run when the url with '/' prefix is accessed. ('views' blueprint replaces 'app')
+
 # Handles http get request
+# Note: login_required checks if current_user is None. If it is then user is redirected to endpoint set in init ("login_manager.login_view = 'auth.login'")
 @views.route("/", methods=["GET"])
-# flask_login decorator that redirects user to auth.login function if not logged in. (set in init "login_manager.login_view = 'auth.login'")
 @login_required
 def home():
+    """
+    -------------------------------------------------------
+    Handles GET requests for / endpoint.
+    Use:
+    -------------------------------------------------------
+    Parameters:
+        None
+    Returns:
+        Renders home page
+    -------------------------------------------------------
+    """
     return render_template("home.html", user=current_user)
 
 
 @views.route("/", methods=["POST"])
 @login_required
 def add_account():
-    # current user returns authenticated if logged in. Can use: user.is_aunthenticated in base.html
+    """
+    -------------------------------------------------------
+    Handles POST requests for / endpoint. Adds new account.
+    Retrieves new account info from user. Checks for
+    validity. Creates a new instance of Account class and
+    adds to db.
+    Use:
+    -------------------------------------------------------
+    Parameters:
+        None
+    Returns:
+        Redirects to home page route
+    -------------------------------------------------------
+    """
+    # Current user returns authenticated if logged in.
+    # Note user.is_aunthenticated is used for nav bar in base.html
+    # Retrieves info from user
     if request.method == "POST":
         AccountTitle = request.form.get("accountTitle")
         UserName = request.form.get("userName")
@@ -27,6 +55,7 @@ def add_account():
         Password = request.form.get("password")
         Additional = request.form.get("additional")
 
+        # Checks validity
         if len(AccountTitle) < 1:
             flash("Account Title required", category="error")
         elif len(AccountTitle) > 20:
@@ -40,6 +69,7 @@ def add_account():
         elif len(Additional) > 130:
             flash("Additional Info is too long", category="error")
         else:
+            # Creates a new instance of account and adds to database
             new_Account = Account(
                 AccountTitle=AccountTitle,
                 UserName=UserName,
@@ -52,17 +82,39 @@ def add_account():
             db.session.commit()
             flash("Account added!", category="success")
 
+    # Redirects back to home page route
+    # Note: Home page will now display new account
     return redirect(url_for("views.home"))
 
 
+# Note: Called from DeleteAccount js function
 @views.route("/delete-account", methods=["POST"])
 def delete_account():
+    """
+    -------------------------------------------------------
+    Handles POST requests for /delete-account endpoint.
+    Retrieves accountId for account to be deleted. Queries
+    db for account with matching id. Deletes account.
+    Use:
+    -------------------------------------------------------
+    Parameters:
+        None
+    Returns:
+        None
+    -------------------------------------------------------
+    """
+    # Retrieves accountId from account to be deleted
     account = json.loads(request.data)
     account_id = account["accountId"]
+
+    # Queries database for account with matching id
+    # Note: Account class has .query method due to inheritance from db.Model
     account = Account.query.get(account_id)
+    # If account is found and the user who created account matches the user deleting it then it is deleted from db
     if account:
         if account.user_id == current_user.id:
             db.session.delete(account)
             db.session.commit()
 
+    # Note: Homepage '/' is returned to in DeleteAccount function in js. Need to return jsonify({}) to avoid error message
     return jsonify({})
