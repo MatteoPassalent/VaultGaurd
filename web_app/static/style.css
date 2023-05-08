@@ -28,3 +28,18 @@
   outline: none;
   cursor: default;
 }
+
+body{
+
+  background-image: url('/static/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+}
+.page-title {
+
+  text-align: center;
+  padding: .7rem;
+
+}

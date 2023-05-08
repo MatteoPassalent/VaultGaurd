@@ -27,7 +27,7 @@ def create_app():
     -------------------------------------------------------
     """
     # initliazes app
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="static")
     app.config["SECRET_KEY"] = "matteo"
     # Sets URI: Database location and type (SQLite)
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"

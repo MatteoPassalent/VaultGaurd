@@ -1,10 +1,8 @@
 <!--Extends base template-->
-
-{% extends "base.html" %} {% block title %}Vault{% endblock %} {% block content
-%}
-
+<title>Vault</title>
+{% extends "base.html" %} {% block content %}
 <!-- Displays notes on homepage (below till /ul)-->
-<h1 align="center">Stored Accounts</h1>
+<h1 class="page-title">My Vault</h1>
 <!--creates list-->
 <ul class="list-group list-group-flush" id="accounts">
   <!--can do this cuz user is passed already?-->
