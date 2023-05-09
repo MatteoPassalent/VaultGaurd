@@ -57,17 +57,17 @@ def add_account():
 
         # Checks validity
         if len(AccountTitle) < 1:
-            flash("Account Title required", category="error")
-        elif len(AccountTitle) > 20:
-            flash("Account Title Too Long", category="error")
-        elif len(UserName) > 21:
-            flash("Username is too long", category="error")
-        elif len(Password) > 50:
-            flash("Password is too long", category="error")
-        elif len(Email) > 35:
-            flash("Email is too long", category="error")
-        elif len(Additional) > 130:
-            flash("Additional Info is too long", category="error")
+            flash("Account Title required")
+        elif len(AccountTitle) > 60:
+            flash("Account Title Too Long")
+        elif len(UserName) > 60:
+            flash("Username is too long")
+        elif len(Password) > 60:
+            flash("Password is too long")
+        elif len(Email) > 60:
+            flash("Email is too long")
+        elif len(Additional) > 300:
+            flash("Additional Info is too long")
         else:
             # Creates a new instance of account and adds to database
             new_Account = Account(
@@ -80,7 +80,6 @@ def add_account():
             )
             db.session.add(new_Account)
             db.session.commit()
-            flash("Account added!", category="success")
 
     # Redirects back to home page route
     # Note: Home page will now display new account

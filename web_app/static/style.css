@@ -37,9 +37,80 @@ body{
   background-attachment: fixed;
 
 }
+
+.home-bground{
+  background: url('/static/images/home-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.round-card{
+
+  border: none !important;
+  background: #91a5b5;
+  border-radius: 1.5rem;
+}
+
+
+.form-container {
+
+  border: 1px solid #91a5b5;
+  border-radius: 1rem;
+  padding: 15px;
+  padding-bottom: 20px;
+  padding-top: 30px;
+  background-color: #91a5b5;
+  margin-bottom: 10px;
+
+}
+
+
 .page-title {
 
   text-align: center;
   padding: .7rem;
+  color: #363535;
+}
+
+.card-title{
+  color: #404040;
+}
+
+
+.log{
+  background-color: #91a5b5;
+  padding: 1rem;
+  border-radius: 1rem;
+
+}
+
+.cpy{
+
+  margin-left: 0.5rem
+}
+
+.cpy{
+  color: #91a5b5;
+  border-color: #91a5b5;
+
+}
+
+.cpy:hover {
+  background-color: #91a5b5;
+  color: white;
+}
+
+.big-button{
+
+  background-color: #363535;
+  color: #adacac;
+  border-color: #363535;  
+
+}
+
+.big-button:hover{
+
+  color: white;  
 
 }
