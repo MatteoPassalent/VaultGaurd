@@ -1,0 +1,19 @@
+.mobile{
+    box-sizing: content-box;
+    width: 555px;
+    flex: 100%;
+    max-width: 555px;
+    min-width: 555px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .row{
+    justify-content: center;
+  }
+
+  .back-group{
+    background-color: lightgrey;
+    padding: 0 0 0 0
+  }
+

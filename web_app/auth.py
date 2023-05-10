@@ -35,8 +35,6 @@ def login():
     if user:
         # Uses check_password_hash to check password from POST request against user password from db with corresponding email
         if check_password_hash(user.password, req_password):
-            # Note: Flash displays message ribbon. Configured in base.html
-            flash("Logged in successfully!", category="success")
             # Uses login_user. remeber = True keeps the user logged in if app is opened again in the same browser
             login_user(user, remember=True)
 
@@ -44,9 +42,9 @@ def login():
             return redirect(url_for("views.home"))
 
         else:
-            flash("Incorrect password, try again.", category="error")
+            flash("Incorrect password, try again.")
     else:
-        flash("User does not exist", category="error")
+        flash("User does not exist")
 
     # Renders login page again if login falied
     # Note: Current user is default anonymous user if not logged in
@@ -110,7 +108,6 @@ def sign_up():
     """
     # Retrieves info from user
     email = request.form.get("email")
-    first_Name = request.form.get("firstName")
     password1 = request.form.get("password1")
     password2 = request.form.get("password2")
 
@@ -120,27 +117,23 @@ def sign_up():
 
     # Checks valididty of user info
     if user:
-        flash("Email in use.", category="error")
+        flash("Email in use.")
     elif len(email) < 4:
-        flash("First name must be at least 5 characters", category="error")
-    elif len(first_Name) < 2:
-        flash("First name must be at least 3 characters", category="error")
+        flash("First name must be at least 5 characters")
     elif password1 != password2:
-        flash("Passwords do not match", category="error")
+        flash("Passwords do not match")
     elif len(password1) < 7:
-        flash("Password must be at least 7 characters.", category="error")
+        flash("Password must be at least 7 characters.")
     else:
         # Creates new instance of user class if all requirements are met
         # Note: Uses hashing for password, sha256 is a hashing algorithm
         new_user = User(
             email=email,
-            first_Name=first_Name,
             password=generate_password_hash(password1, method="sha256"),
         )
         # Adds new user to database
         db.session.add(new_user)
         db.session.commit()
-        flash("Account created!", category="success")
         # Logs user in with flask login
         login_user(new_user, remember=True)
         # Redirects to home page

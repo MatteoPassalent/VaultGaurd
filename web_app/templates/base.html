@@ -1,26 +1,36 @@
-<!--base template is basic theme of site, later you can overide base template to specify different pages etc-->
-<!-- link is a CDN (content delivery network), allows to load custom CSS and Javascript, classes that can be used for elements to look nicer, bootsrap -->
-<!-- Django is templating engine that allows you to write html/python instead of CSS or Javascript -->
+<!-- Note: Using jinja; flask templating engine -->
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <!-- Note: Ensures fit for mobile -->
     <meta name="viewport" content="width=device-width, initial=scale=1" />
+    <!-- Note: crossorigin avoids same origin policy issues with browser -->
+    <!-- Note: integrity is key to ensure file being loaded is not tampered with -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="static/style.css?v96" />
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      crossorigin="anonymous"
+      href="static/small.css?v72"
+      media="(max-width: 1199px)"
     />
-    <link rel="stylesheet" href="static/style.css" />
-
-    <title>{% block title %}Home{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="static/verysmall.css?v7"
+      media="(max-width: 660px)"
+    />
+    <link
+      rel="stylesheet"
+      href="static/veryverysmall.css?v7"
+      media="(max-width: 450px)"
+    />
+    <link rel="icon" href="static/images/favicon.ico?v3" type="image/x-icon" />
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -34,9 +44,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbar">
         <div class="navbar-nav">
-          <!-- related to current_user mod in views-->
+          <!-- Note: is_authenticated is a property of current_user from flask_login -->
           {% if user.is_authenticated %}
-          <a class="nav-item nav-link" id="home" href="/">Vault</a>
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
           {% else %}
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
@@ -46,33 +55,21 @@
       </div>
     </nav>
 
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    'error' %}
+    {% with messages = get_flashed_messages() %} {% if messages %} {% for
+    message in messages %}
     <div class="alert alert-danger alter-dismissable fade show">
       {{ message }}
       <button type="button" class="close" data-dismiss="alert">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    {% else %}
-    <div class="alert alert-success alter-dismissable fade show">
-      {{ message }}
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    {% endif %} {% endfor %} {% endif %} {% endwith %}
+    {% endfor %} {% endif %} {% endwith %}
 
     <div class="container">{% block content %} {% endblock %}</div>
+    <!-- Note: Used for flash -->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"
     ></script>
     <script
