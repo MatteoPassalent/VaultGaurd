@@ -11,3 +11,9 @@
   .row{
     justify-content: center;
   }
+
+  .back-group{
+    background-color: lightgrey;
+    padding: 0 0 0 0
+  }
+

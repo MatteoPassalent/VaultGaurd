@@ -55,12 +55,12 @@ body{
 
 .form-container {
 
-  border: 1px solid #91a5b5;
+  border: 1px solid darkgrey;
   border-radius: 1rem;
   padding: 15px;
   padding-bottom: 20px;
   padding-top: 30px;
-  background-color: #91a5b5;
+  background-color: darkgrey;
   margin-bottom: 10px;
 
 }
@@ -87,14 +87,12 @@ body{
 
 .cpy{
 
-  margin-left: 0.5rem
-}
-
-.cpy{
+  margin-left: 0.5rem;
   color: #91a5b5;
   border-color: #91a5b5;
 
 }
+
 
 .cpy:hover {
   background-color: #91a5b5;
@@ -113,4 +111,12 @@ body{
 
   color: white;  
 
+}
+
+.back-group{
+  background-color: darkgrey;
+  padding-top: 1.2rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 1rem;
 }

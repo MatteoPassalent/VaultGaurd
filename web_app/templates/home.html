@@ -1,22 +1,18 @@
-<!--Extends base template-->
 <title>Vault</title>
 {% extends "base.html" %} {% block content %}
-<!-- Displays notes on homepage (below till /ul)-->
+
 <h1 class="page-title">My Vault</h1>
-<!--creates list-->
 <body class="home-bground">
   <ul class="list-group list-group-flush" id="accounts">
-    <!--can do this cuz user is passed already?-->
     <div class="container">
-      <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="row row-cols-1 row-cols-md-2 g-4 back-group">
+        <!-- User is passed from views home function -->
         {% for account in user.accounts %}
-
-        <!-- this where mobile is-->
         <div class="col mb-4 mobile">
           <div class="card h-100 round-card">
             <button
               class="btn position-absolute btn-lg"
-              style="top: 8px; right: 8px"
+              style="top: 8px; right: 5px"
               onclick="confirmDelete( {{ account.id }})"
             >
               <span aria-hidden="true">&times;</span>
@@ -66,7 +62,7 @@
                   <span class="list-item-label"><u>Password:</u></span>
                   <input
                     id="password-{{ loop.index }}"
-                    class="list-item-value password-input"
+                    class="list-item-value password-input password-align"
                     type="password"
                     value="{{ account.Password }}"
                     readonly
@@ -97,7 +93,6 @@
     </div>
   </ul>
 
-  <!--Sends post request with textarea that allows input of account and submit button that adds the account-->
   <form method="POST" action="{{ url_for('views.add_account') }}">
     <br />
     <div align="center">
@@ -113,7 +108,6 @@
       <div class="collapse" id="account">
         <br />
         <div class="form-container">
-          <!-- New container div -->
           <input
             name="accountTitle"
             id="accountTitle"
