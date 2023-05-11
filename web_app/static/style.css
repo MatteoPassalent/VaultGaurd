@@ -50,6 +50,7 @@ body{
   border: none !important;
   background: #91a5b5;
   border-radius: 1.5rem;
+  margin-top: .7rem;
 }
 
 
@@ -115,8 +116,5 @@ body{
 
 .back-group{
   background-color: darkgrey;
-  padding-top: 1.2rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   border-radius: 1rem;
 }
