@@ -4,6 +4,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
 
+# Note: Application is stateful due to flask-login keeping user data in server session
+
 # creates blueprint object named auth
 # Note: Blueprint holds multiple routes inside, can be used like an individual flask app.
 auth = Blueprint("auth", __name__)
@@ -35,7 +37,7 @@ def login():
     if user:
         # Uses check_password_hash to check password from POST request against user password from db with corresponding email
         if check_password_hash(user.password, req_password):
-            # Uses login_user. remeber = True keeps the user logged in if app is opened again in the same browser
+            # Uses login_user. remeber = True keeps the user logged in if app is opened again in the same browser (session managment not caching)
             login_user(user, remember=True)
 
             # Note: Using url_for instead of having to hardcode the link to the home page.
@@ -119,7 +121,7 @@ def sign_up():
     if user:
         flash("Email in use.")
     elif len(email) < 4:
-        flash("First name must be at least 5 characters")
+        flash("Email must be at least 5 characters")
     elif password1 != password2:
         flash("Passwords do not match")
     elif len(password1) < 7:
