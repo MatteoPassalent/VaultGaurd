@@ -1,5 +1,9 @@
 <title>Login</title>
-{% extends "base.html" %} {% block content %}
+
+{% extends "base.html" %} {% block navbar %}
+<a class="nav-item nav-link" id="login" href="/login">Login</a>
+<a class="nav-item nav-link" id="singUp" href="/sign-up">Sign Up</a> {% endblock
+%} {% block content %}
 
 <form method="POST">
   <h1 class="page-title">Login</h1>

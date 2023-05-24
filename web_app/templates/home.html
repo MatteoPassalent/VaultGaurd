@@ -1,6 +1,8 @@
 <title>Vault</title>
-{% extends "base.html" %} {% block content %}
 
+{% extends "base.html" %} {% block navbar %}
+<a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+{% endblock %} {% block content %}
 <h1 class="page-title">My Vault</h1>
 <body class="home-bground">
   <ul class="list-group list-group-flush" id="accounts">
