@@ -66,11 +66,12 @@ def login_g():
         Renders login page
     -------------------------------------------------------
     """
-    return render_template("login.html", user=current_user)
+
+    return render_template("login.html")
 
 
 # Note: login_required checks if current_user is None. If it is then user is redirected to endpoint set in init ("login_manager.login_view = 'auth.login'")
-@auth.route("/logout")
+@auth.route("/logout", methods=["GET"])
 @login_required
 def logout():
     """
@@ -157,4 +158,4 @@ def sign_up_g():
         Renders sing-up page
     -------------------------------------------------------
     """
-    return render_template("sign_up.html", user=current_user)
+    return render_template("sign_up.html")
