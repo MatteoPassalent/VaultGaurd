@@ -28,20 +28,13 @@ function copyToClipboard(elementId) {
     const el = document.getElementById(elementId);
     const text = el.tagName === "INPUT" ? el.value : el.innerText;
     navigator.clipboard.writeText(text)
-        .then(() => {
-            console.log("Text copied to clipboard");
-        })
-        .catch((err) => {
-            console.error("Unable to copy text: ", err);
-        });
 }
 
 
 function scrollToBottom() {
-    setTimeout(() => {
-        window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-        });
-    }, 320);
-}
+    const accountDiv = document.getElementById("account");
+    accountDiv.addEventListener("transitionend", () => {
+      accountDiv.scrollIntoView({ behavior: "smooth", block: "end" });
+    }, { once: true });
+  }
+  
