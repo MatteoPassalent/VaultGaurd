@@ -28,7 +28,7 @@ def home():
     return render_template("home.html", user=current_user)
 
 
-@views.route("/", methods=["POST"])
+@views.route("/add-account", methods=["POST"])
 @login_required
 def add_account():
     """

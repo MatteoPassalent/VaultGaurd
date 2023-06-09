@@ -33,6 +33,7 @@ def login():
     req_email = request.form.get("email")
     req_password = request.form.get("password")
     # Queries database, if an email in database matches email from user then returns user, else None
+    # Note: need .first() because otherwise user variable will never be None even if not found
     user = User.query.filter_by(email=req_email).first()
     if user:
         # Uses check_password_hash to check password from POST request against user password from db with corresponding email
