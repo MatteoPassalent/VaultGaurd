@@ -21,7 +21,7 @@
             </button>
             <div class="card-body">
               <h5 class="card-title" style="font-size: 30px">
-                {{ account.AccountTitle }}
+                {{ account.AccountTitle | decrypt }}
               </h5>
             </div>
             <ul class="list-group list-group-flush">
@@ -32,7 +32,7 @@
                     id="username-{{ loop.index }}"
                     class="list-item-value text-wrap"
                     style="word-break: break-word"
-                    >{{ account.UserName }}</span
+                    >{{ account.UserName | decrypt }}</span
                   >
                   <button
                     class="btn btn-sm list-item-action cpy"
@@ -49,7 +49,7 @@
                     id="email-{{ loop.index }}"
                     class="list-item-value text-wrap"
                     style="word-break: break-word"
-                    >{{ account.Email }}</span
+                    >{{ account.Email | decrypt }}</span
                   >
                   <button
                     class="btn btn-sm list-item-action cpy"
@@ -66,7 +66,7 @@
                     id="password-{{ loop.index }}"
                     class="list-item-value password-input password-align"
                     type="password"
-                    value="{{ account.Password }}"
+                    value="{{ account.Password | decrypt }}"
                     readonly
                   />
                   <button
@@ -83,7 +83,7 @@
                   <span
                     class="list-item-value text-wrap"
                     style="word-break: break-word"
-                    >{{ account.Additional }}</span
+                    >{{ account.Additional | decrypt }}</span
                   >
                 </div>
               </li>

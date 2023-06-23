@@ -7,9 +7,14 @@ from flask_sqlalchemy import SQLAlchemy
 # Note: Path module contains methods related to file paths
 from os import path
 from flask_login import LoginManager
+from cryptography.fernet import Fernet
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
+# Should be stored in an enviroment variable, may cause problems with launching.
+secret_key = Fernet.generate_key()
+cipher_suite = Fernet(secret_key)
 
 
 def create_app():
@@ -69,6 +74,11 @@ def create_app():
         """
         # Queries the database for a user object with a matching id
         return User.query.get(int(id))
+
+    @app.template_filter("decrypt")
+    def decrypt_and_decode_filter(value):
+        decrypted_value = cipher_suite.decrypt(value).decode("utf-8")
+        return decrypted_value
 
     # Calls create_database
     create_database(app)

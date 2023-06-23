@@ -3,6 +3,7 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+import hashlib
 
 # Note: Application is stateful due to flask-login keeping user data in server session
 
@@ -32,6 +33,10 @@ def login():
     # Retrieves input from user
     req_email = request.form.get("email")
     req_password = request.form.get("password")
+
+    req_email = generate_password_hash(req_email, method="sha256")
+    flash(req_email)
+
     # Queries database, if an email in database matches email from user then returns user, else None
     # Note: need .first() because otherwise user variable will never be None even if not found
     user = User.query.filter_by(email=req_email).first()
@@ -114,6 +119,7 @@ def sign_up():
     email = request.form.get("email")
     password1 = request.form.get("password1")
     password2 = request.form.get("password2")
+    email = generate_password_hash(email, method="sha256")
 
     # Queries db for user with matching email,
     # Note: need .first() because otherwise user variable will never be None even if not found
@@ -132,9 +138,10 @@ def sign_up():
         # Creates new instance of user class if all requirements are met
         # Note: Uses hashing for password, sha256 is a hashing algorithm
         new_user = User(
-            email=email,
+            email=generate_password_hash(email, method="sha256"),
             password=generate_password_hash(password1, method="sha256"),
         )
+        flash(new_user.email)
         # Adds new user to database
         db.session.add(new_user)
         db.session.commit()
@@ -142,7 +149,6 @@ def sign_up():
         login_user(new_user, remember=True)
         # Redirects to home page
         return redirect(url_for("views.home"))
-
     return render_template("sign_up.html", user=current_user)
 
 

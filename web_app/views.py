@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from . import db
 from .models import Account
 import json
+from . import cipher_suite
 
 # creates blueprint object named views
 # Note: Blueprint holds multiple routes inside, can be used like an individual flask app.
@@ -71,11 +72,11 @@ def add_account():
         else:
             # Creates a new instance of account and adds to database
             new_Account = Account(
-                AccountTitle=AccountTitle,
-                UserName=UserName,
-                Email=Email,
-                Password=Password,
-                Additional=Additional,
+                AccountTitle=cipher_suite.encrypt(AccountTitle.encode("utf-8")),
+                UserName=cipher_suite.encrypt(UserName.encode("utf-8")),
+                Email=cipher_suite.encrypt(Email.encode("utf-8")),
+                Password=cipher_suite.encrypt(Password.encode("utf-8")),
+                Additional=cipher_suite.encrypt(Additional.encode("utf-8")),
                 user_id=current_user.id,
             )
             db.session.add(new_Account)
