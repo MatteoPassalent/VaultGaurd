@@ -88,7 +88,7 @@ def add_account():
 
 
 # Note: Called from DeleteAccount js function
-@views.route("/delete-account", methods=["POST"])
+@views.route("/delete-account", methods=["DELETE"])
 def delete_account():
     """
     -------------------------------------------------------

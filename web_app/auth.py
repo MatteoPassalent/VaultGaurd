@@ -35,7 +35,6 @@ def login():
     req_password = request.form.get("password")
 
     req_email = hashlib.sha256(req_email.encode()).hexdigest()
-    flash(req_email)
 
     # Queries database, if an email in database matches email from user then returns user, else None
     # Note: need .first() because otherwise user variable will never be None even if not found
@@ -141,7 +140,6 @@ def sign_up():
             email=email,
             password=generate_password_hash(password1, method="sha256"),
         )
-        flash(new_user.email)
         # Adds new user to database
         db.session.add(new_user)
         db.session.commit()

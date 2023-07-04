@@ -12,8 +12,17 @@ from cryptography.fernet import Fernet
 db = SQLAlchemy()
 DB_NAME = "database.db"
 
-# Should be stored in an enviroment variable, may cause problems with launching.
-secret_key = Fernet.generate_key()
+# Needs to be stored securely for launching
+if path.exists("web_app\config.txt"):
+    with open("web_app\config.txt", "rb") as file:
+        secret_key = file.readline()
+        file.close()
+else:
+    with open("web_app\config.txt", "wb") as file:
+        secret_key = Fernet.generate_key()
+        file.write(secret_key)
+        file.close()
+
 cipher_suite = Fernet(secret_key)
 
 
